@@ -32,3 +32,5 @@ for line in cleaned:
     prev_neg = cur_n
 
 print('}')
+
+print(len(cleaned))
