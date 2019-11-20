@@ -27,11 +27,19 @@ for line in cleaned:
     #     cur_p = prev_pos/2
     #     cur_n = prev_neg/2
     # else:
-    cur_p = vs['pos']
-    cur_n = vs['neg']
-    cur_u = vs['neu']
+    p = vs['pos']
+    n = vs['neg']
+    u = vs['neu']
     # print('{' + str(int(cur_p*180)) + ',' + str(int(cur_n*120)) + '},')
-    print('{' + str(int(cur_p*100)) + ',' + str(int(cur_n*100)) + ',' + str(int(cur_u*100)) +'},')
+    print('{' + str(int(p*100)) + ',' + str(int(n*100)) + ',' + str(int(u*100)) +'},')
+
+if
+
+ 
+
+
+
+
 
     # prev_pos = cur_p
     # prev_neg = cur_n
