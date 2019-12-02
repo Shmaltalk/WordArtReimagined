@@ -39,7 +39,6 @@ def draw_pattern(patternNum, mult):
     for p in pattern:
         xy.append(p[0] * i_dir * mult + i)
         xy.append(p[1] * i_dir * mult + j)
-    draw.line(xy, aggdraw.Pen("red", 1))
 
 def get_pattern(tup):
     pos = tup[0]
