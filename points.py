@@ -5,6 +5,8 @@ import random
 
 root = tk.Tk()
 
+# SERVO 1 goes from 2.5 - 12
+
 loop = [
 (0.00, 0.00),
 (1.23, -0.25),
