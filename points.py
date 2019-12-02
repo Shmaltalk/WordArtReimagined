@@ -61,12 +61,60 @@ madisons_stupid_line = [
 (10, 0),
 ]
 
-choices = [loop, arc, flat]
+wavy_line = [
+(0.00, 0.00),
+(0.60, 0.70),
+(1.34, 0.40),
+(2.24, -0.40),
+(3.43, -0.95),
+(4.28, -0.50),
+(5.12, 0.45),
+(6.12, 1.29),
+(7.01, 1.59),
+(8.36, 1.59),
+(8.81, 1.14),
+(9.45, 0.20),
+(10.00, 0.00),
+]
 
-"""
+
+
+
+double_loop = [
+(0.00, 0.35),
+(1.04, -0.35),
+(2.36, -2.22),
+(3.75, -4.24),
+(4.51, -6.25),
+(5.21, -9.24),
+(5.35, -11.67),
+(5.42, -11.60),
+(5.14, -12.71),
+(3.96, -13.47),
+(2.85, -12.36),
+(2.85, -10.97),
+(3.26, -9.65),
+(3.75, -8.82),
+(6.46, -7.43),
+(8.82, -7.64),
+(10.63, -8.68),
+(11.53, -10.42),
+(10.83, -12.15),
+(9.65, -12.50),
+(8.47, -11.67),
+(7.78, -9.72),
+(7.50, -6.18),
+(7.92, -4.17),
+(8.61, -2.15),
+(10.00, 0.35),
+]
+
+choices = [double_loop, arc, loop, madisons_stupid_line, flat, wavy_line]
+
+"""arc = wavy_line
 print('[')
 for i in range(len(arc)):
-    arc[i] = ((arc[i][0]-2.93) * 10/(5.47-2.93), (arc[i][1] - 6.9) * 10/(5.47-2.93))
+    arc[i] = ((arc[i][0]-6.28) * 10/(8.29-6.28), (arc[i][1] - 1) * 10/(8.29-6.28))
     print(f'({arc[i][0]:.2f}, {arc[i][1]:.2f}),')
 print(']')
 """
@@ -76,19 +124,19 @@ size = 800, 500
 draw = aggdraw.Dib("RGB", size)
 
 
-for j in range(200, 400, 40):
+for j in range(200, 400, 10):
     i = 100
     while i < 500:
         choice = choices[random.randint(0, len(choices) - 1)]
         xy = []
-        mult = (random.random() - 0.5) * 10
+        mult = (random.random() - 0.5) * 7
         mult += abs(mult) / mult
         for p in choice:
             xy.append(p[0] * abs(mult) + i)
             xy.append(p[1] * mult + j)
         i += 10 * abs(mult)
 
-        draw.line(xy, aggdraw.Pen("red"))
+        draw.line(xy, aggdraw.Pen("red", 1))
 
 
 frame = tk.Frame(root, width=size[0], height=size[1], bg="")
