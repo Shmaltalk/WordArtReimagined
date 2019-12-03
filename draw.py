@@ -23,7 +23,7 @@ def draw():
         if i >= 500 or i<=100: # at horizontal edges
             i_dir *= -1 # switch drawing directions
             j += 20 # increment y val
-        draw_pattern(pat, mult)
+        xy = draw_pattern(pat, mult, i_dir, i, j)
         i += 10 * i_dir * mult
         draw.line(xy, aggdraw.Pen("red", 1)) # temp
 
@@ -33,12 +33,13 @@ def draw():
 
     tk.mainloop() # temp
 
-def draw_pattern(patternNum, mult):
+def draw_pattern(patternNum, mult, i_dir, i, j):
     pattern = num2pattern[patternNum]
     xy = []
     for p in pattern:
         xy.append(p[0] * i_dir * mult + i)
         xy.append(p[1] * i_dir * mult + j)
+    return xy
 
 def get_pattern(tup):
     pos = tup[0]
@@ -47,14 +48,14 @@ def get_pattern(tup):
 
     if (pos > neg):
         if (neg >= neu):
-            return (pattern2num("loop"), 6+((pos-neg)*5)) # pos > neg >= neu
+            return (pattern2num["loop"], 6+((pos-neg)*5)) # pos > neg >= neu
         elif (pos >= neu): # pos >= neu > neg
-            return (pattern2num("double_loop"), 6+((pos-neu)*5))
+            return (pattern2num["double_loop"], 6+((pos-neu)*5))
         else: # neu > pos > neg
-            return (pattern2num("flat"), 6+((neu-pos)*5))
+            return (pattern2num["flat"], 6+((neu-pos)*5))
     else:
         if (pos >= neu): # neg >= pos >= neu
-            return (pattern2num("madisons_stupid_line"), 6+((neg-pos)*5))
+            return (pattern2num["madisons_stupid_line"], 6+((neg-pos)*5))
         elif (neg >= neu): # neg >= neu > pos
             return (pattern2num["arc"], 6+((neg-neu)*5))
         else: # neu > neg >= pos

@@ -1,8 +1,8 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def read_file():
-    text_file = open("init.txt", "r")
-    lines = text_file.readlines()
+    with open("init.txt", "r", encoding='utf8') as text_file:
+        lines = text_file.readlines()
     cleaned = []
     for line in lines:
         if line.strip():

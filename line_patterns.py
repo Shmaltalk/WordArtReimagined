@@ -1,6 +1,5 @@
 
-num2pattern = [double_loop, arc, loop, madisons_stupid_line, flat, wavy_line]
-pattern2num = {"double_loop": 0, "arc": 1, "loop": 2, "madisons_stupid_line": 3, "flat": 4, "wavy_line": 5}
+
 
 loop = [
 (0.00, 0.00),
@@ -105,3 +104,6 @@ double_loop = [
 (8.61, -2.15),
 (10.00, 0.35),
 ]
+
+num2pattern = [double_loop, arc, loop, madisons_stupid_line, flat, wavy_line]
+pattern2num = {"double_loop": 0, "arc": 1, "loop": 2, "madisons_stupid_line": 3, "flat": 4, "wavy_line": 5}

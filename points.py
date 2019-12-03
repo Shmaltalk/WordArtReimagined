@@ -17,7 +17,7 @@ print(']')
 
 
 def draw_pattern(patternNum, mult):
-    
+
     for j in range(200, 400, 10): # y min/max/step
         i = 100
         while i < 500:
@@ -31,8 +31,9 @@ def draw_pattern(patternNum, mult):
             draw.line(xy, aggdraw.Pen("red", 1))
 
 
-frame = tk.Frame(root, width=size[0], height=size[1], bg="")
+"""frame = tk.Frame(root, width=size[0], height=size[1], bg="")
 frame.bind("<Expose>", lambda e: draw.expose(hwnd=e.widget.winfo_id()))
 frame.pack()
 
 tk.mainloop()
+"""
