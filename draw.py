@@ -1,15 +1,20 @@
 import tkinter as tk
 import aggdraw
+import random
 
 from sentinalysis import get_sentinalysis
 from line_patterns import pattern2num, num2pattern
 from points import draw_pattern
+
+colors = ["red", "blue", "green", "yellow"] # temp
 
 def draw():
     sentinalysis_values = get_sentinalysis()
     pattern_list = []
     for tup in sentinalysis_values:
         pattern_list.append(get_pattern(tup))
+
+    print(pattern_list)
 
     root = tk.Tk() # temp
 
@@ -25,7 +30,7 @@ def draw():
             j += 20 # increment y val
         xy = draw_pattern(pat, mult, i_dir, i, j)
         i += 10 * i_dir * mult
-        draw.line(xy, aggdraw.Pen("red", 1)) # temp
+        draw.line(xy, aggdraw.Pen(colors[random.randint(0,3)], 1)) # temp
 
     frame = tk.Frame(root, width=size[0], height=size[1], bg="") # temp
     frame.bind("<Expose>", lambda e: draw.expose(hwnd=e.widget.winfo_id())) # temp
@@ -46,19 +51,20 @@ def get_pattern(tup):
     neg = tup[1]
     neu = tup[2]
 
-    if (pos > neg):
-        if (neg >= neu):
-            return (pattern2num["loop"], 6+((pos-neg)*5)) # pos > neg >= neu
-        elif (pos >= neu): # pos >= neu > neg
-            return (pattern2num["double_loop"], 6+((pos-neu)*5))
-        else: # neu > pos > neg
-            return (pattern2num["flat"], 6+((neu-pos)*5))
-    else:
-        if (pos >= neu): # neg >= pos >= neu
-            return (pattern2num["madisons_stupid_line"], 6+((neg-pos)*5))
-        elif (neg >= neu): # neg >= neu > pos
-            return (pattern2num["arc"], 6+((neg-neu)*5))
-        else: # neu > neg >= pos
-            return (pattern2num["wavy_line"], 6+((neu-neg)*5))
+    return (random.randint(0, 5), random.random()*4 + 7)
+    # if (pos > neg):
+    #     if (neg >= neu):
+    #         return (pattern2num["loop"], 6+((pos-neg)*5)) # pos > neg >= neu
+    #     elif (pos >= neu): # pos >= neu > neg
+    #         return (pattern2num["double_loop"], 6+((pos-neu)*5))
+    #     else: # neu > pos > neg
+    #         return (pattern2num["flat"], 6+((neu-pos)*5))
+    # else:
+    #     if (pos >= neu): # neg >= pos >= neu
+    #         return (pattern2num["madisons_stupid_line"], 6+((neg-pos)*5))
+    #     elif (neg >= neu): # neg >= neu > pos
+    #         return (pattern2num["arc"], 6+((neg-neu)*5))
+    #     else: # neu > neg >= pos
+    #         return (pattern2num["wavy_line"], 6+((neu-neg)*5))
 
 draw()
