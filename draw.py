@@ -19,7 +19,9 @@ def draw():
     root = tk.Tk() # temp
 
     size = 800, 500 # temp
-    draw = aggdraw.Dib("RGB", size) # temp
+    #draw = aggdraw.Dib("RGB", size) # temp
+    w = tk.Canvas(root, width=size[0], height=size[1])
+    w.pack()
 
     i = 100
     i_dir = 1
@@ -30,11 +32,11 @@ def draw():
             j += 20 # increment y val
         xy = draw_pattern(pat, mult, i_dir, i, j)
         i += 10 * i_dir * mult
-        draw.line(xy, aggdraw.Pen(colors[random.randint(0,3)], 1)) # temp
+        w.create_line(xy) # temp
 
-    frame = tk.Frame(root, width=size[0], height=size[1], bg="") # temp
-    frame.bind("<Expose>", lambda e: draw.expose(hwnd=e.widget.winfo_id())) # temp
-    frame.pack() # temp
+    #frame = tk.Frame(root, width=size[0], height=size[1], bg="") # temp
+    #frame.bind("<Expose>", lambda e: draw.expose(hwnd=e.widget.winfo_id())) # temp
+    #frame.pack() # temp
 
     tk.mainloop() # temp
 
