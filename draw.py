@@ -5,6 +5,8 @@ import random
 from sentinalysis import get_sentinalysis
 from line_patterns import pattern2num, num2pattern
 from points import draw_pattern
+from servoControl import servo_setup, move_servos
+
 
 def draw():
     sentinalysis_values = get_sentinalysis()
@@ -16,26 +18,24 @@ def draw():
         pattern_list.append(curr_pattern)
 
     print(pattern_list)
-    w = tk.Canvas(root, width=size[0], height=size[1])
-    w.pack()
 
-    i = 100
-    i_dir = 1
-    j = 200
+    base_servo, on_arm_servo = servo_setup()
+    
     for pat, mult in pattern_list:
-        i_temp = i + (10 * i_dir * mult)
+        i_temp = i + (10 * i_dir * mult) # make sure we're not about to overshoot
         if i_temp >= 500 or i_temp<=100: # at horizontal edges
             i_dir *= -1 # switch drawing directions
             j += 40 # increment y val
         xy = draw_pattern(pat, mult, i_dir, i, j)
         i += 10 * i_dir * mult
+        for x, y in xy:
+            move_servos(base_servo, on_arm_servo, x, y)
 
 def draw_pattern(patternNum, mult, i_dir, i, j):
     pattern = num2pattern[patternNum]
     xy = []
     for p in pattern:
-        xy.append(p[0] * i_dir * mult + i)
-        xy.append(p[1] * mult + j)
+        xy.append((p[0] * i_dir * mult + i, p[1] * mult + j))
     return xy
 
 def get_pattern(tup):
