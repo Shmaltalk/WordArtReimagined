@@ -1,17 +1,58 @@
 import tkinter as tk
 import random
+import RPi.GPIO as GPIO
+import time
 
 from sentinalysis import get_sentinalysis
 from line_patterns import pattern2num, num2pattern
 from points import draw_pattern
 from servo_control_arduino import servo_setup, move_servos
-import time
+
+GPIO.setwarnings(False) # Ignore warning for now
+GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
-def draw():
+def draw_control():
     serial = servo_setup()
-    # move_servos(serial, 100, 100)
+    i = 100
+    j = 100
+    i_dir = 1
+    
+    move_servos(serial, 100, 100)
+    check_button_push(0)
     sentinalysis_values = get_sentinalysis()
+
+    while (True):
+        i, j, i_dir = draw(sentinalysis_values, i, j, i_dir)
+
+        if (not check_button_push(15)):
+            move_servos(serial, 100, 100)
+            i = 100
+            j = 100
+            i_dir = 1
+            check_button_push(0)
+        
+        sentinalysis_values = []
+        sentinalysis_values = get_sentinalysis()
+
+    serial.close()
+
+def check_button_push(wait_time):
+    if (wait_time>0):
+        start_time = time.time()
+        while (time.time()-start_time < wait_time):
+            if GPIO.input(10) == GPIO.LOW:
+                return True
+        return False
+    else:
+        while (True):
+            if GPIO.input(10) == GPIO.LOW:
+                return True
+    
+
+def draw(sentinalysis_values, i, j, i_dir):
+    # move_servos(serial, 100, 100)
     print(sentinalysis_values)
     pattern_list = []
 
@@ -20,12 +61,6 @@ def draw():
         pattern_list.append(curr_pattern)
 
     print(pattern_list)
-
-
-
-    i = 100
-    j = 100
-    i_dir = 1
 
     for pat, mult in pattern_list:
         i_temp = i + (10 * i_dir * mult) # make sure we're not about to overshoot
@@ -36,9 +71,7 @@ def draw():
         i += 10 * i_dir * mult
         for x, y in xy:
             move_servos(serial, x, y)
-    time.sleep(15)
-    move_servos(serial, 100, 100)
-    serial.close()
+    return (i, j, i_dir)
 
 def draw_pattern(patternNum, mult, i_dir, i, j):
     pattern = num2pattern[patternNum]
@@ -75,4 +108,9 @@ def get_pattern(tup):
         else:
             return (pattern2num["loop"], (max(pos, neg)*size_ratio))
 
-draw()
+
+
+while (true):
+  draw_control()
+
+
