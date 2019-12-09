@@ -24,8 +24,8 @@ def servo_setup():
 def move_servos(ser, x, y):
     global last_x
     global last_y
-    x = (x - 300) / 40
-    y = y / 40 + .25
+    x = (x - 300) / 50
+    y = y / 50 + 1
 
     distance = math.sqrt((x - last_x) ** 2 + (y - last_y) ** 2)
     prog = 0
@@ -41,10 +41,7 @@ def move_servos(ser, x, y):
         if servo1 > 90:
             servo1 = servo1 - 180
 
-        #servo1 = 0
-        #servo2 = 90
-
-        ser.write(f'{int((95 - servo1) / 180 * 1650 + 500)},{int((163 - servo2) / 180 * 1650 + 650)};'.encode('utf-8'))
+        ser.write(f'{int((85 - servo1) / 180 * 2100 + 450)},{int((180 - servo2) / 180 * 1450 + 605)};'.encode('utf-8'))
         #print(f'{int(servo1)},{int(servo2)};')
 
         sleep(.02)
@@ -55,10 +52,7 @@ def move_servos(ser, x, y):
     if servo1 > 90:
         servo1 = servo1 - 180
 
-    #servo1 = 0
-    #servo2 = 90
-
-    ser.write(f'{int((95 - servo1) / 180 * 1650 + 500)},{int((163 - servo2) / 180 * 1650 + 650)};'.encode('utf-8'))
+    ser.write(f'{int((85 - servo1) / 180 * 2100 + 450)},{int((180 - servo2) / 180 * 1450 + 605)};'.encode('utf-8'))
     #print(f'{int(servo1)},{int(servo2)};')
 
     #sleep(.25)                  # Wait 1 second

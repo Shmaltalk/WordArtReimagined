@@ -9,7 +9,7 @@ from servo_control_arduino import servo_setup, move_servos
 
 def draw():
     serial = servo_setup()
-    move_servos(serial, 100, 100)
+    # move_servos(serial, 100, 100)
     sentinalysis_values = get_sentinalysis()
     print(sentinalysis_values)
     pattern_list = []
@@ -20,7 +20,7 @@ def draw():
 
     print(pattern_list)
 
-    
+
 
     i = 100
     j = 100
@@ -36,7 +36,7 @@ def draw():
         for x, y in xy:
             move_servos(serial, x, y)
 
-    move_servos(serial, 100, 100)
+    # move_servos(serial, 100, 100)
     serial.close()
 
 def draw_pattern(patternNum, mult, i_dir, i, j):
