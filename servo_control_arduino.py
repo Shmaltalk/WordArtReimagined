@@ -25,7 +25,7 @@ def move_servos(ser, x, y):
     global last_x
     global last_y
     x = (x - 300) / 50
-    y = y / 50 + 1
+    y = y / 50 + 2.75
 
     distance = math.sqrt((x - last_x) ** 2 + (y - last_y) ** 2)
     prog = 0
@@ -44,8 +44,8 @@ def move_servos(ser, x, y):
         ser.write(f'{int((85 - servo1) / 180 * 2100 + 450)},{int((180 - servo2) / 180 * 1450 + 605)};'.encode('utf-8'))
         #print(f'{int(servo1)},{int(servo2)};')
 
-        sleep(.02)
-        prog += .03
+        sleep(.013)
+        prog += .01
 
     #print(f'{x}, {y}')
     servo1, servo2 = get_angles(x, y)

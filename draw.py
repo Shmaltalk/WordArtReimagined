@@ -5,6 +5,7 @@ from sentinalysis import get_sentinalysis
 from line_patterns import pattern2num, num2pattern
 from points import draw_pattern
 from servo_control_arduino import servo_setup, move_servos
+import time
 
 
 def draw():
@@ -35,8 +36,8 @@ def draw():
         i += 10 * i_dir * mult
         for x, y in xy:
             move_servos(serial, x, y)
-
-    # move_servos(serial, 100, 100)
+    time.sleep(15)
+    move_servos(serial, 100, 100)
     serial.close()
 
 def draw_pattern(patternNum, mult, i_dir, i, j):
