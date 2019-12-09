@@ -11,7 +11,7 @@ def get_angles(x, y):
     return (angle1, angle2)
 
 def servo_setup():
-    ser = serial.Serial('COM4', 9600)
+    ser = serial.Serial('/dev/ttyACM0', 9600)
 
     global last_x
     last_x = -5.5
@@ -36,7 +36,7 @@ def move_servos(ser, x, y):
         curr_x = last_x + xvect * frac
         curr_y = last_y + yvect * frac
 
-        print(f'{x}, {y}')
+        #print(f'{x}, {y}')
         servo1, servo2 = get_angles(curr_x, curr_y)
         if servo1 > 90:
             servo1 = servo1 - 180
@@ -45,12 +45,12 @@ def move_servos(ser, x, y):
         #servo2 = 90
 
         ser.write(f'{int((95 - servo1) / 180 * 1650 + 500)},{int((163 - servo2) / 180 * 1650 + 650)};'.encode('utf-8'))
-        print(f'{int(servo1)},{int(servo2)};')
+        #print(f'{int(servo1)},{int(servo2)};')
 
         sleep(.02)
         prog += .03
 
-    print(f'{x}, {y}')
+    #print(f'{x}, {y}')
     servo1, servo2 = get_angles(x, y)
     if servo1 > 90:
         servo1 = servo1 - 180
@@ -59,7 +59,7 @@ def move_servos(ser, x, y):
     #servo2 = 90
 
     ser.write(f'{int((95 - servo1) / 180 * 1650 + 500)},{int((163 - servo2) / 180 * 1650 + 650)};'.encode('utf-8'))
-    print(f'{int(servo1)},{int(servo2)};')
+    #print(f'{int(servo1)},{int(servo2)};')
 
     #sleep(.25)                  # Wait 1 second
     last_x = x

@@ -1,5 +1,4 @@
 import tkinter as tk
-import aggdraw
 import random
 
 from sentinalysis import get_sentinalysis
@@ -9,6 +8,8 @@ from servo_control_arduino import servo_setup, move_servos
 
 
 def draw():
+    serial = servo_setup()
+    move_servos(serial, 100, 100)
     sentinalysis_values = get_sentinalysis()
     print(sentinalysis_values)
     pattern_list = []
@@ -19,7 +20,7 @@ def draw():
 
     print(pattern_list)
 
-    serial = servo_setup()
+    
 
     i = 100
     j = 100

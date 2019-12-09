@@ -1,6 +1,5 @@
 
 import tkinter as tk
-import aggdraw
 from line_patterns import num2pattern
 
 root = tk.Tk()
