@@ -11,6 +11,7 @@ from servo_control_arduino import servo_setup, move_servos
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(12,GPIO.OUT)
 
 
 def draw_control():
@@ -40,16 +41,30 @@ def draw_control():
     serial.close()
 
 def check_button_push(wait_time):
+    GPIO.output(12,GPIO.LOW)
+    return_val = False
     if (wait_time>0):
         start_time = time.time()
         while (time.time()-start_time < wait_time):
+            if(int(time.time()/50) % 2 == 1):
+                GPIO.output(12,GPIO.HIGH)
+            else:
+                GPIO.output(12,GPIO.LOW)
             if GPIO.input(10) == GPIO.LOW:
-                return True
-        return False
+                print("button pushed!")
+                return_val = True
+        return_val = False
     else:
         while (True):
+            if(int(time.time()/50) % 2 == 1):
+                GPIO.output(12,GPIO.HIGH)
+            else:
+                GPIO.output(12,GPIO.LOW)
             if GPIO.input(10) == GPIO.LOW:
-                return True
+                print("button pushed!")
+                return_val = True
+    GPIO.output(12,GPIO.HIGH)
+    return return_val
     
 
 def draw(serial, sentinalysis_values, i, j, i_dir):

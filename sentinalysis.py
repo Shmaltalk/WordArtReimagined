@@ -5,8 +5,9 @@ import os
 import pytesseract
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-def camera_setup()
+def camera_setup():
     camera = PiCamera() 
+    return camera
 
 def read_file(camera):
     with open("init.txt", "r", encoding='utf8') as text_file:
