@@ -3,7 +3,7 @@ import random
 import RPi.GPIO as GPIO
 import time
 
-from sentinalysis import get_sentinalysis
+from sentinalysis import get_sentinalysis, camera_setup
 from line_patterns import pattern2num, num2pattern
 from points import draw_pattern
 from servo_control_arduino import servo_setup, move_servos
@@ -15,13 +15,14 @@ GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 def draw_control():
     serial = servo_setup()
+    camera = camera_setup()
     i = 100
     j = 100
     i_dir = 1
     
     move_servos(serial, 100, 100)
     check_button_push(0)
-    sentinalysis_values = get_sentinalysis()
+    sentinalysis_values = get_sentinalysis(camera)
 
     while (True):
         i, j, i_dir = draw(serial, sentinalysis_values, i, j, i_dir)
@@ -34,7 +35,7 @@ def draw_control():
             check_button_push(0)
         
         sentinalysis_values = []
-        sentinalysis_values = get_sentinalysis()
+        sentinalysis_values = get_sentinalysis(camera)
 
     serial.close()
 

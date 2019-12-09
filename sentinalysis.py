@@ -5,12 +5,13 @@ import os
 import pytesseract
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-def read_file():
+def camera_setup()
+    camera = PiCamera() 
+
+def read_file(camera):
     with open("init.txt", "r", encoding='utf8') as text_file:
         lines = text_file.readlines()
     cleaned = []
-    
-    camera = PiCamera() 
     camera.start_preview()
     camera.rotation = 90
     time.sleep(3)
@@ -33,10 +34,10 @@ def read_file():
 
 
 
-def get_sentinalysis():
+def get_sentinalysis(camera):
     analyzer = SentimentIntensityAnalyzer()
 
-    cleaned = read_file()
+    cleaned = read_file(camera)
 
     final_scores = []
     for line in cleaned:
