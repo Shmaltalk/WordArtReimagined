@@ -46,8 +46,8 @@ def check_button_push(wait_time):
     if (wait_time>0):
         start_time = time.time()
         while (time.time()-start_time < wait_time):
-            print(int(time.time()/500) % 2)
-            if(int(time.time()/500) % 2 == 1):
+            print(int(time.time()))
+            if(int(time.time()) % 2 == 1):
                 GPIO.output(12,GPIO.HIGH)
             else:
                 GPIO.output(12,GPIO.LOW)
