@@ -110,7 +110,6 @@ def get_pattern(tup):
 
 
 
-while (true):
-  draw_control()
+draw_control()
 
 
