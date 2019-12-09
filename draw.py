@@ -23,12 +23,14 @@ def draw_control():
     
     move_servos(serial, 100, 100)
     check_button_push(0)
+    GPIO.output(12,GPIO.HIGH)
     sentinalysis_values = get_sentinalysis(camera)
 
     while (True):
         i, j, i_dir = draw(serial, sentinalysis_values, i, j, i_dir)
 
         if (not check_button_push(15)):
+            GPIO.output(12,GPIO.LOW)
             move_servos(serial, 100, 100)
             i = 100
             j = 100
@@ -41,29 +43,23 @@ def draw_control():
     serial.close()
 
 def check_button_push(wait_time):
-    GPIO.output(12,GPIO.LOW)
-    return_val = False
     if (wait_time>0):
         start_time = time.time()
         while (time.time()-start_time < wait_time):
-            if(int(time.time()/50) % 2 == 1):
+            print(int(time.time()/500) % 2)
+            if(int(time.time()/500) % 2 == 1):
                 GPIO.output(12,GPIO.HIGH)
             else:
                 GPIO.output(12,GPIO.LOW)
             if GPIO.input(10) == GPIO.LOW:
                 print("button pushed!")
-                return_val = True
-        return_val = False
+                return True
+        return False
     else:
         while (True):
-            if(int(time.time()/50) % 2 == 1):
-                GPIO.output(12,GPIO.HIGH)
-            else:
-                GPIO.output(12,GPIO.LOW)
             if GPIO.input(10) == GPIO.LOW:
                 print("button pushed!")
-                return_val = True
-    GPIO.output(12,GPIO.HIGH)
+                return True
     return return_val
     
 
