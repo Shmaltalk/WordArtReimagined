@@ -5,7 +5,7 @@ import random
 from sentinalysis import get_sentinalysis
 from line_patterns import pattern2num, num2pattern
 from points import draw_pattern
-from servoControl import servo_setup, move_servos
+from servo_control_arduino import servo_setup, move_servos
 
 
 def draw():
@@ -19,8 +19,12 @@ def draw():
 
     print(pattern_list)
 
-    base_servo, on_arm_servo = servo_setup()
-    
+    serial = servo_setup()
+
+    i = 100
+    j = 100
+    i_dir = 1
+
     for pat, mult in pattern_list:
         i_temp = i + (10 * i_dir * mult) # make sure we're not about to overshoot
         if i_temp >= 500 or i_temp<=100: # at horizontal edges
@@ -29,7 +33,10 @@ def draw():
         xy = draw_pattern(pat, mult, i_dir, i, j)
         i += 10 * i_dir * mult
         for x, y in xy:
-            move_servos(base_servo, on_arm_servo, x, y)
+            move_servos(serial, x, y)
+
+    move_servos(serial, 100, 100)
+    serial.close()
 
 def draw_pattern(patternNum, mult, i_dir, i, j):
     pattern = num2pattern[patternNum]
