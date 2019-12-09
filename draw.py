@@ -24,7 +24,7 @@ def draw_control():
     sentinalysis_values = get_sentinalysis()
 
     while (True):
-        i, j, i_dir = draw(sentinalysis_values, i, j, i_dir)
+        i, j, i_dir = draw(serial, sentinalysis_values, i, j, i_dir)
 
         if (not check_button_push(15)):
             move_servos(serial, 100, 100)
@@ -51,7 +51,7 @@ def check_button_push(wait_time):
                 return True
     
 
-def draw(sentinalysis_values, i, j, i_dir):
+def draw(serial, sentinalysis_values, i, j, i_dir):
     # move_servos(serial, 100, 100)
     print(sentinalysis_values)
     pattern_list = []
